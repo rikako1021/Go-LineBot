@@ -18,12 +18,12 @@ func main() {
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	msg := "Hello World!!!!"
+	msg := "Hello World ^_^; ^_^;"
 	fmt.Fprintf(w, msg)
 }
 
 func lineHandler(w http.ResponseWriter, r *http.Request) {
-	//BotInitialize
+	//Bot初期化 (o^-^o)
 	bot, err := linebot.New(
 		"9ddc19f09c29661624873ec584880c3a",
 		"8n0qXxvo/SRyXMPCErf8blmeM+N2Nh91UWSEf3zYC0JlCKXdrdDUajMFgL+3L0dW1xfgqj6CLApFrHzHHdSaymRaJgZPhK/8Ne2FDww6GTc7BO2QmGPjl3Sh0DOGnkCNG1n6cmGKOLOb5W3ayzV2bwdB04t89/1O/w1cDnyilFU=",
@@ -32,7 +32,7 @@ func lineHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	//Botイベント取得
+	//Botイベント取得 (‥^▽^‥)
 	events, err := bot.ParseRequest(r)
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
