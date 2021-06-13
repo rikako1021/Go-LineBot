@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 )
@@ -12,13 +13,14 @@ func main() {
 	//ハンドラ
 	http.HandleFunc("/", helloHandler)
 	http.HandleFunc("/callback", lineHandler)
+
 	fmt.Println("http://localhost:8080 で起動中")
 	//サーバきどう
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	msg := "Hello World ^_^; ^_^;"
+	msg := "Hello World ^_^; ^_^"
 	fmt.Fprintf(w, msg)
 }
 
@@ -45,15 +47,31 @@ func lineHandler(w http.ResponseWriter, r *http.Request) {
 	for _, event := range events {
 		//メッセージ受信のイベント
 		if event.Type == linebot.EventTypeMessage {
-			switch messasge := event.Message.(type) {
+			switch message := event.Message.(type) {
 			//テキスト形式のメッセージ
 			case *linebot.TextMessage:
-				replyMessage := message.TextMessage
-				_, err = bot.replyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do()
+				replyMessage := message.Text
+				_, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do()
 				if err != nil {
 					log.Print(err)
 				}
+			case *linebot.LocationMessage:
+				sendResstroInfo(bot, event)
 			}
+
 		}
+	}
+}
+func sendResstroInfo(bot *linebot.Client, e *linebot.Event) {
+	msg := e.Message.(*linebot.LocationMessage)
+
+	lat := strconv.FormatFloat(msg.Latitude, 'f', 2, 64)
+	lng := strconv.FormatFloat(msg.Longitude, 'f', 2, 64)
+
+	replyMsg := fmt.Sprintf("緯度：%s\n軽度：%s", lat, lng)
+
+	_, err := bot.ReplyMessage(e.ReplyToken, linebot.NewTextMessage(replyMsg)).Do()
+	if err != nil {
+		log.Print(err)
 	}
 }
