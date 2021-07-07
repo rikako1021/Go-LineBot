@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"unicode/utf8"
 
@@ -20,7 +21,7 @@ func main() {
 	fmt.Println("http://localhost:5000 で起動中")
 
 	//サーバきどう
-	log.Fatal(http.ListenAndServe(":5000", nil))
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
