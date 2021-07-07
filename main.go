@@ -89,7 +89,7 @@ type response struct {
 	Results results `json:"results"`
 }
 
-// respinseAPIレスポンス内容
+// respinseAPI レスポンス内容
 type results struct {
 	Shop []shop `json:"shop"`
 }
