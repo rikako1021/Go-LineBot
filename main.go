@@ -17,10 +17,10 @@ func main() {
 	http.HandleFunc("/", helloHandler)
 	http.HandleFunc("/callback", lineHandler)
 
-	fmt.Println("http://localhost:8080 で起動中")
+	fmt.Println("http://localhost:5000 で起動中")
 
 	//サーバきどう
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":5000", nil))
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
