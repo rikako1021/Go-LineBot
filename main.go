@@ -25,7 +25,7 @@ func main() {
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	msg := "Hello World ^_^; ^_^"
-	fmt.Fprintf(w, msg)
+	fmt.Fprint(w, msg)
 }
 
 func lineHandler(w http.ResponseWriter, r *http.Request) {
