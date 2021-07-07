@@ -1,2 +1,1 @@
-web: bin/Go-LineBot
-web: bundle exec thin start -p $PORT
+worker: bin/Go-LineBot
