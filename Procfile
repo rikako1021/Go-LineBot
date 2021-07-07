@@ -1,1 +1,1 @@
-worker: bin/Go-LineBot
+web: bin/Go-LineBot
