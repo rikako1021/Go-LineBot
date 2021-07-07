@@ -145,7 +145,6 @@ func getRestoInfo(lat string, lng string) []*linebot.CarouselColumn {
 		if 60 < utf8.RuneCountInString(addr) {
 			addr = string([]rune(addr)[:60])
 		}
-
 		cc := linebot.NewCarouselColumn(
 			shop.Photo.Mobile.L,
 			shop.Name,
