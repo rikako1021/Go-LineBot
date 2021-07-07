@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
+	"unicode/utf8"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 )
@@ -15,6 +18,7 @@ func main() {
 	http.HandleFunc("/callback", lineHandler)
 
 	fmt.Println("http://localhost:8080 で起動中")
+
 	//サーバきどう
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -27,8 +31,8 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 func lineHandler(w http.ResponseWriter, r *http.Request) {
 	//Bot初期化 (o^-^o)
 	bot, err := linebot.New(
-		"9ddc19f09c29661624873ec584880c3a",
-		"8n0qXxvo/SRyXMPCErf8blmeM+N2Nh91UWSEf3zYC0JlCKXdrdDUajMFgL+3L0dW1xfgqj6CLApFrHzHHdSaymRaJgZPhK/8Ne2FDww6GTc7BO2QmGPjl3Sh0DOGnkCNG1n6cmGKOLOb5W3ayzV2bwdB04t89/1O/w1cDnyilFU=",
+		"(9ddc19f09c29661624873ec584880c3a)",
+		"(8n0qXxvo/SRyXMPCErf8blmeM+N2Nh91UWSEf3zYC0JlCKXdrdDUajMFgL+3L0dW1xfgqj6CLApFrHzHHdSaymRaJgZPhK/8Ne2FDww6GTc7BO2QmGPjl3Sh0DOGnkCNG1n6cmGKOLOb5W3ayzV2bwdB04t89/1O/w1cDnyilFU=)",
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -56,22 +60,98 @@ func lineHandler(w http.ResponseWriter, r *http.Request) {
 					log.Print(err)
 				}
 			case *linebot.LocationMessage:
-				sendResstroInfo(bot, event)
+				sendRestoInfo(bot, event)
 			}
 
 		}
 	}
 }
-func sendResstroInfo(bot *linebot.Client, e *linebot.Event) {
+
+func sendRestoInfo(bot *linebot.Client, e *linebot.Event) {
 	msg := e.Message.(*linebot.LocationMessage)
 
 	lat := strconv.FormatFloat(msg.Latitude, 'f', 2, 64)
 	lng := strconv.FormatFloat(msg.Longitude, 'f', 2, 64)
 
-	replyMsg := fmt.Sprintf("緯度：%s\n軽度：%s", lat, lng)
+	replyMsg := getRestoInfo(lat, lng)
 
-	_, err := bot.ReplyMessage(e.ReplyToken, linebot.NewTextMessage(replyMsg)).Do()
-	if err != nil {
+	res := linebot.NewTemplateMessage(
+		"レストラン一覧", linebot.NewCarouselTemplate(replyMsg...).WithImageOptions("rectangle", "cover"),
+	)
+
+	if _, err := bot.ReplyMessage(e.ReplyToken, res).Do(); err != nil {
 		log.Print(err)
 	}
+}
+
+// responseAPI
+type response struct {
+	Results results `json:"results"`
+}
+
+// respinseAPI レスポンス内容
+type results struct {
+	Shop []shop `json:"shop"`
+}
+
+// shop(レストラン一覧)
+type shop struct {
+	Name    string `json:"name"`
+	Address string `json:"address"`
+	Photo   photo  `json:"ohoto"`
+	URLS    urls   `json:"urls"`
+}
+
+// photo 写真URL一覧
+type photo struct {
+	Mobile mobile `json:"mobile"`
+}
+
+// mobile モバイル用
+type mobile struct {
+	L string `json:"l"`
+}
+
+// urls URL一覧
+type urls struct {
+	PC string `json:"pc"`
+}
+
+func getRestoInfo(lat string, lng string) []*linebot.CarouselColumn {
+	apikey := "()"
+	url := fmt.Sprintf(
+		"https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?format=json&key=%s&lat=%s&lng=%s",
+		apikey, lat, lng)
+
+	// ボディ取得
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var data response
+	if err := json.Unmarshal(body, &data); err != nil {
+		log.Fatal(err)
+	}
+
+	var ccs []*linebot.CarouselColumn
+	for _, shop := range data.Results.Shop {
+		addr := shop.Address
+		if 60 < utf8.RuneCountInString(addr) {
+			addr = string([]rune(addr)[:60])
+		}
+		cc := linebot.NewCarouselColumn(
+			shop.Photo.Mobile.L,
+			shop.Name,
+			addr,
+			linebot.NewURIAction("ホットペッパーで開く", shop.URLS.PC),
+		).WithImageOptions("#ffffff")
+		ccs = append(ccs, cc)
+	}
+	return ccs
 }
