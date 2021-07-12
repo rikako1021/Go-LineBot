@@ -343,4 +343,3 @@ QRコードを読み取ってアカウントを友達追加し、実際にメッ
 トーク画面下部の「＋」ボタンから位置情報を送信し、このように返信が来たらOKです。
 
 <img src="https://user-images.githubusercontent.com/68047214/125363511-b3c6e000-e3ab-11eb-806e-cf36f61623b7.jpg" width="30%">
-
