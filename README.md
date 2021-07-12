@@ -1,7 +1,36 @@
-# 環境設定
+# 0.　アプリケーションの概要
+
+### 背景
+
+今すぐ食事を取りたい時、またはある土地に詳しくない時に、インターネット上で検索すると情報量が多すぎる
+
+登録や複雑な手続きなく気軽に使える飲食店検索ツールが欲しい
+         
+<br>
+
+### 機能
+
+LINEのトーク上で送信された位置情報をもとに、BOTアカウントが周辺の飲食店の情報をHotpepperグルメから引用し表示する。
+
+<br>
+
+### 使用したリソース
+
+<li>Golang </li>
+<li>LINEmessagingAPI,HotpepperAPI</li>
+<li>github - バージョン管理</li>
+<li>delve(Golangパッケージ) - デバッグ</li>
+<li>Heroku - デプロイ</li>
+
+
+******
+
+# 1.　環境設定
 
 ## Goのインストール
+
 <br>
+
 <b>・Mac</b>
 
 コマンドラインで以下のコマンドを実行
@@ -11,11 +40,12 @@ $ brew install go
 ```
 
 <br>
+
 <b>・Windows</b>
-<br>
- [公式HP](https://golang.org/doc/install)より、Windows用インストーラーを選択してダウンロード＋実行
 
 <br>
+
+[公式HP](https://golang.org/doc/install)より、Windows用インストーラーを選択してダウンロード＋実行
 
 インストール先フォルダは特段の理由がなければデフォルトのまま変更しなくて良いです。
 
@@ -70,6 +100,21 @@ $ source ~/.bash_profile
 ### 拡張機能のインストール
 
 VSCodeを起動して、```Ctrl+Shift+X```で拡張機能を開いて```Go```で検索します。
+
 検索結果に表示される以下の拡張機能をインストールします。
 
+![GO extention](https://user-images.githubusercontent.com/68047214/125348202-e3b7b880-e396-11eb-9cb5-36a51f2c78b9.png)
 
+<br>
+
+### 主な機能
+
+この拡張機能では、
+<li>Lint＆Format</li>
+<li>デバッグ</li>
+<li>コード補完</li>
+を自動的にやってくれます。
+
+******
+
+# 2. コードをクローンする
