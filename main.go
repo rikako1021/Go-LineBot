@@ -3,14 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/line/line-bot-sdk-go/linebot"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
+	"os/exec"
 	"strconv"
 	"unicode/utf8"
-
-	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 func main() {
@@ -30,16 +29,16 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func lineHandler(w http.ResponseWriter, r *http.Request) {
-	//Bot初期化 (o^-^o)
+	//Bot初期化
 	bot, err := linebot.New(
-		"(9ddc19f09c29661624873ec584880c3a)",
-		"(8n0qXxvo/SRyXMPCErf8blmeM+N2Nh91UWSEf3zYC0JlCKXdrdDUajMFgL+3L0dW1xfgqj6CLApFrHzHHdSaymRaJgZPhK/8Ne2FDww6GTc7BO2QmGPjl3Sh0DOGnkCNG1n6cmGKOLOb5W3ayzV2bwdB04t89/1O/w1cDnyilFU=)",
+		"9ddc19f09c29661624873ec584880c3a",
+		"AObAf46/9JgGeuWvu0xATv8/jAL20ObglW8D2SmbuFSUVWR+XSwsNC7dvpeVaZvg1xfgqj6CLApFrHzHHdSaymRaJgZPhK/8Ne2FDww6GTe9L3GKUJpH8XBbYI8yTLohh9DlyMD0Xnj3PgieaVHZcAdB04t89/1O/w1cDnyilFU=",
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	//Botイベント取得 (‥^▽^‥)
+	//Botイベント取得
 	events, err := bot.ParseRequest(r)
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
@@ -77,7 +76,8 @@ func sendRestoInfo(bot *linebot.Client, e *linebot.Event) {
 	replyMsg := getRestoInfo(lat, lng)
 
 	res := linebot.NewTemplateMessage(
-		"レストラン一覧", linebot.NewCarouselTemplate(replyMsg...).WithImageOptions("rectangle", "cover"),
+		"レストラン一覧",
+		linebot.NewCarouselTemplate(replyMsg...).WithImageOptions("rectangle", "cover"),
 	)
 
 	if _, err := bot.ReplyMessage(e.ReplyToken, res).Do(); err != nil {
@@ -119,7 +119,7 @@ type urls struct {
 }
 
 func getRestoInfo(lat string, lng string) []*linebot.CarouselColumn {
-	apikey := "()"
+	apikey := "8d6f6ca4b5d9872e"
 	url := fmt.Sprintf(
 		"https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?format=json&key=%s&lat=%s&lng=%s",
 		apikey, lat, lng)
