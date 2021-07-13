@@ -144,7 +144,7 @@ $ go run main.go
 
 <br>
 
-# 3. 各APIの設定と連携
+# 3. 各ツールの設定と連携
 
 ## LINE APIの設定
 
@@ -194,6 +194,26 @@ func lineHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 ```
+
+<br>
+
+## HotpepperAPIの設定
+
+### APIKEY発行
+公式サイトの新規登録画面より、メールアドレスを入力するだけで登録できます。
+
+[リクルートWEBサービス](https://webservice.recruit.co.jp/register/)
+
+<br>
+
+### コードに追加
+登録したメールアドレス宛にAPIKEYが送信されるので、<b>main.go</b>の```getRestoInfo```の部分に追加します。
+```
+func getRestoInfo(lat string, lng string) []*linebot.CarouselColumn {
+	apikey := "(ここにAPIKEYを追加)"
+```
+
+HotpepperAPIとの連携はこれで完了です。
 
 <br>
 

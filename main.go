@@ -87,12 +87,12 @@ func sendRestoInfo(bot *linebot.Client, e *linebot.Event) {
 	}
 }
 
-// responseAPI
+// response APIのレスポンス
 type response struct {
 	Results results `json:"results"`
 }
 
-// respinseAPI レスポンス内容
+// respinse APIのレスポンス内容
 type results struct {
 	Shop []shop `json:"shop"`
 }
@@ -142,6 +142,7 @@ func getRestoInfo(lat string, lng string) []*linebot.CarouselColumn {
 		log.Fatal(err)
 	}
 
+	// 格納したJSONデータから店名と住所を抽出する
 	var ccs []*linebot.CarouselColumn
 	for _, shop := range data.Results.Shop {
 		addr := shop.Address
