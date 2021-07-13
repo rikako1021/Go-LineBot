@@ -118,9 +118,13 @@ VSCodeを起動して、```Ctrl+Shift+X```で拡張機能を開いて```Go```で
 
 <br>
 
+<br>
+
 ******
 
+
 # 2. コードをクローンして実行する
+
 
 作業したいディレクトリで以下のコマンドを実行します。
 
@@ -343,3 +347,31 @@ QRコードを読み取ってアカウントを友達追加し、実際にメッ
 トーク画面下部の「＋」ボタンから位置情報を送信し、このように返信が来たらOKです。
 
 <img src="https://user-images.githubusercontent.com/68047214/125363511-b3c6e000-e3ab-11eb-806e-cf36f61623b7.jpg" width="30%">
+
+<br>
+
+<br>
+
+******
+
+# Links
+
+<li>ソースコード</li>
+
+[rikako1021/Go-LineBot](https://github.com/rikako1021/Go-LineBot) 
+
+<li>バグ報告、issue追加</li>
+
+[New Issue · rikako1021/Go-LineBot](https://github.com/rikako1021/Go-LineBot/issues/new)
+
+<li>Golangチュートリアル</li>
+
+[A Tour of Go](https://tour.golang.org/welcome/1)
+
+<li>Heroku</li>
+
+[Getting Started on Heroku with Go | Heroku Dev Center](https://devcenter.heroku.com/articles/getting-started-with-go#set-up)
+
+<li>LINE Developers</li>
+
+[LINE Developers](https://developers.line.biz/en/)

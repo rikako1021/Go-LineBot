@@ -60,6 +60,7 @@ func lineHandler(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					log.Print(err)
 				}
+			// 位置情報のメッセージ
 			case *linebot.LocationMessage:
 				sendRestoInfo(bot, event)
 			}
