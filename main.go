@@ -14,13 +14,13 @@ import (
 )
 
 func main() {
-	//ハンドラ
+	//ハンドラ登録
 	http.HandleFunc("/", helloHandler)
 	http.HandleFunc("/callback", lineHandler)
 
-	fmt.Println("http://localhost:5000 で起動中")
+	fmt.Println("https://fathomless-depths-28419.herokuapp.com/ で起動中")
 
-	//サーバきどう
+	//サーバ起動
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
 

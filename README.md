@@ -326,7 +326,7 @@ $ git push heroku master
 
 ### LINEBOTのWebhookに追加する
 
-デプロイ先ページのURLをLINE DevelopersのMessagingAPIの部分にあるWebhookURLとして設定します。
+デプロイ先ページのURL+```/webhook```をLINE DevelopersのMessagingAPIの部分にあるWebhookURLとして設定します。
 
 ![webhook](https://user-images.githubusercontent.com/68047214/125362340-b0caf000-e3a9-11eb-9930-b2638f0bc1ff.png)
 
