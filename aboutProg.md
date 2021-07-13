@@ -323,15 +323,15 @@ var ccs []*linebot.CarouselColumn
 
 
 ```
-		cc := linebot.NewCarouselColumn(
-			shop.Photo.Mobile.L,
-			shop.Name,
-			addr,
-			linebot.NewURIAction("ホットペッパーで開く", shop.URLS.PC),
-		).WithImageOptions("#ffffff")
-		ccs = append(ccs, cc)
-	}
-	return ccs
+cc := linebot.NewCarouselColumn(
+	shop.Photo.Mobile.L,
+	shop.Name,
+	addr,
+	linebot.NewURIAction("ホットペッパーで開く", shop.URLS.PC),
+	).WithImageOptions("#ffffff")
+	ccs = append(ccs, cc)
+}
+return ccs
 ```
 ```shop.Photo.Nobile.L```, ```shop.Name```などはそれぞれBOTga返信するメッセージの各項目に対応している。
 
@@ -358,7 +358,7 @@ var ccs []*linebot.CarouselColumn
 
 [LINE Messaging API SDK for Go](https://github.com/line/line-bot-sdk-go)
 
-<li>プロジェクト構成
+<li>プロジェクト構成</li>
 
 [Goのプロジェクト構成の基本](https://zenn.dev/nobonobo/articles/4fb018a24f9ee9)
 
