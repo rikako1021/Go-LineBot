@@ -3,13 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/line/line-bot-sdk-go/linebot"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"unicode/utf8"
+
+	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 func main() {
