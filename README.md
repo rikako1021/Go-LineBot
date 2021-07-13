@@ -61,7 +61,7 @@ go version go1.16.15 darwin/arm64
 <br>
 
 ## 環境変数（パス）の設定
-PATHに```%GOPATH%\bin```を登録する。
+PATHに```%GOPATH%\bin```を登録します。
 
 この登録が無いと```go get```でインストールしたコマンドを実行できません。
 
@@ -118,9 +118,13 @@ VSCodeを起動して、```Ctrl+Shift+X```で拡張機能を開いて```Go```で
 
 <br>
 
+<br>
+
 ******
 
+
 # 2. コードをクローンして実行する
+
 
 作業したいディレクトリで以下のコマンドを実行します。
 
@@ -140,7 +144,7 @@ $ go run main.go
 
 <br>
 
-# 3. 各APIの設定と連携
+# 3. 各ツールの設定と連携
 
 ## LINE APIの設定
 
@@ -190,6 +194,26 @@ func lineHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 ```
+
+<br>
+
+## HotpepperAPIの設定
+
+### APIKEY発行
+公式サイトの新規登録画面より、メールアドレスを入力するだけで登録できます。
+
+[リクルートWEBサービス](https://webservice.recruit.co.jp/register/)
+
+<br>
+
+### コードに追加
+登録したメールアドレス宛にAPIKEYが送信されるので、<b>main.go</b>の```getRestoInfo```の部分に追加します。
+```
+func getRestoInfo(lat string, lng string) []*linebot.CarouselColumn {
+	apikey := "(ここにAPIKEYを追加)"
+```
+
+HotpepperAPIとの連携はこれで完了です。
 
 <br>
 
@@ -326,7 +350,7 @@ $ git push heroku master
 
 ### LINEBOTのWebhookに追加する
 
-デプロイ先ページのURLをLINE DevelopersのMessagingAPIの部分にあるWebhookURLとして設定します。
+デプロイ先ページのURL+```/webhook```をLINE DevelopersのMessagingAPIの部分にあるWebhookURLとして設定します。
 
 ![webhook](https://user-images.githubusercontent.com/68047214/125362340-b0caf000-e3a9-11eb-9930-b2638f0bc1ff.png)
 
@@ -343,3 +367,31 @@ QRコードを読み取ってアカウントを友達追加し、実際にメッ
 トーク画面下部の「＋」ボタンから位置情報を送信し、このように返信が来たらOKです。
 
 <img src="https://user-images.githubusercontent.com/68047214/125363511-b3c6e000-e3ab-11eb-806e-cf36f61623b7.jpg" width="30%">
+
+<br>
+
+<br>
+
+******
+
+# Links
+
+<li>ソースコード</li>
+
+[rikako1021/Go-LineBot](https://github.com/rikako1021/Go-LineBot) 
+
+<li>バグ報告、issue追加</li>
+
+[New Issue · rikako1021/Go-LineBot](https://github.com/rikako1021/Go-LineBot/issues/new)
+
+<li>Golangチュートリアル</li>
+
+[A Tour of Go](https://tour.golang.org/welcome/1)
+
+<li>Heroku</li>
+
+[Getting Started on Heroku with Go | Heroku Dev Center](https://devcenter.heroku.com/articles/getting-started-with-go#set-up)
+
+<li>LINE Developers</li>
+
+[LINE Developers](https://developers.line.biz/en/)

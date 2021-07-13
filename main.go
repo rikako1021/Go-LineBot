@@ -3,28 +3,29 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/line/line-bot-sdk-go/linebot"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"unicode/utf8"
+
+	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 func main() {
-	//ハンドラ
+	//ハンドラ登録
 	http.HandleFunc("/", helloHandler)
 	http.HandleFunc("/callback", lineHandler)
 
-	fmt.Println("http://localhost:5000 で起動中")
+	fmt.Println("https://fathomless-depths-28419.herokuapp.com/ で起動中")
 
-	//サーバきどう
+	//サーバ起動
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	msg := "Hello World ^_^; ^_^"
+	msg := "Hello World ^_^ ^_^"
 	fmt.Fprint(w, msg)
 }
 
@@ -59,6 +60,7 @@ func lineHandler(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					log.Print(err)
 				}
+			// 位置情報のメッセージ
 			case *linebot.LocationMessage:
 				sendRestoInfo(bot, event)
 			}
@@ -85,12 +87,12 @@ func sendRestoInfo(bot *linebot.Client, e *linebot.Event) {
 	}
 }
 
-// responseAPI
+// response APIのレスポンス
 type response struct {
 	Results results `json:"results"`
 }
 
-// respinseAPI レスポンス内容
+// respinse APIのレスポンス内容
 type results struct {
 	Shop []shop `json:"shop"`
 }
@@ -140,6 +142,7 @@ func getRestoInfo(lat string, lng string) []*linebot.CarouselColumn {
 		log.Fatal(err)
 	}
 
+	// 格納したJSONデータから店名と住所を抽出する
 	var ccs []*linebot.CarouselColumn
 	for _, shop := range data.Results.Shop {
 		addr := shop.Address
