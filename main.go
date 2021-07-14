@@ -101,7 +101,7 @@ type results struct {
 type shop struct {
 	Name    string `json:"name"`
 	Address string `json:"address"`
-	Photo   photo  `json:"ohoto"`
+	Photo   photo  `json:"photo"`
 	URLS    urls   `json:"urls"`
 }
 
